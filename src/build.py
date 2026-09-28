@@ -11,6 +11,7 @@ apart by caps and space rather than color, constant slow speed, hard frame edges
 Run:  python3 src/build.py
 """
 import base64
+import hashlib
 import html
 import io
 import pathlib
@@ -331,6 +332,10 @@ def main():
     svg, T = reel(faces)
     (ROOT / "assets").mkdir(exist_ok=True)
     (ROOT / "assets" / "reel.svg").write_text(svg)
+    # Version the README image URL by content so browsers and GitHub's cache fetch each new cut.
+    readme = ROOT / "README.md"
+    v = hashlib.sha1(svg.encode()).hexdigest()[:8]
+    readme.write_text(re.sub(r"reel\.svg\?v=[\w]+", f"reel.svg?v={v}", readme.read_text()))
     (ROOT / "site").mkdir(exist_ok=True)
     (ROOT / "site" / "index.html").write_text(page(faces))
     print(f"assets/reel.svg   {len(svg) // 1024} KB · loop {T:.1f}s")
