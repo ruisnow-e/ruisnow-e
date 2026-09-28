@@ -26,9 +26,9 @@ FACES = {
     (400, "normal"): "Inter-Regular.ttf",
     (500, "normal"): "Inter-Medium.ttf",
     (700, "normal"): "Inter-Bold.ttf",
-    (400, "italic"): "Inter-Italic.ttf",      # titles of works are set in italics
-    (500, "italic"): "Inter-MediumItalic.ttf",
 }
+# No italic faces on purpose: titles of works are slanted versions of the upright
+# letterforms (browser-synthesized oblique), not Inter's rounder true italic.
 
 W, H = 1000, 560
 GUTTER = 28     # half-width of the space between role and name columns (SVG)
@@ -42,7 +42,7 @@ FILMS = f"{SITE}/work/film"
 DANCE = f"{SITE}/work/dance"
 
 # Any text may be a plain string or a (text, url) tuple.
-# "pair" takes a role and one or more names (stacked).
+# "pair" takes a role and one or more names (stacked); "stack" centers a label over one or more lines.
 CREDITS = [
     ("card", "Directed by", ("RUI SONG", SITE)),
     ("caps", "ENGINEER  ·  FILM DIRECTOR  ·  CHOREOGRAPHER"),
@@ -52,6 +52,7 @@ CREDITS = [
     ("pair", "M.S. Computer Science", ("NORTHEASTERN UNIVERSITY", "https://www.khoury.northeastern.edu/")),
     ("pair", "", "GPA 4.0 · MERIT SCHOLARSHIP"),
     ("pair", "MFA Film Production", ("CALIFORNIA COLLEGE OF THE ARTS", "https://www.cca.edu/")),
+    ("pair", "", "MERIT SCHOLARSHIP"),
     ("pair", "B.A. Communication", "CAPITAL UNIV. OF ECONOMICS & BUSINESS"),
 
     ("head", "RESEARCH"),
@@ -62,33 +63,61 @@ CREDITS = [
     ("pair", "Published", ("ARXIV:2605.27705 · 2026", ARXIV)),
 
     ("head", "EXPERIENCE"),
-    ("pair", "Member of Technical Staff, Intern", ("PHILO LABS, INC.", "https://philolabs.ai/")),
     ("pair", "Khoury Student Ambassador", ("NORTHEASTERN UNIVERSITY", "https://sv-research-showcase.vercel.app/")),
+    ("pair", "Member of Technical Staff", ("PHILO LABS", "https://philolabs.ai/")),
+    ("pair", "Teaching Assistant", ("CALIFORNIA COLLEGE OF THE ARTS", "https://www.cca.edu/")),
+    ("pair", "Student Fellow", ("THE FLAHERTY", "https://flahertyseminar.org/")),
     ("pair", "Social Video Producer", "ELLE MAGAZINE"),
-    ("pair", "Assistant Director, Intern", "CHINA CENTRAL TELEVISION"),
+    ("pair", "Assistant Business Director", "CHINA CENTRAL TELEVISION"),
+    ("pair", "Social Media Volunteer", ("UNITED NATIONS VOLUNTEERS", "https://www.unv.org/")),
 
     ("head", "PROJECTS"),
+    ("pair", "In Development", "SLATEONE"),
+    ("pair", "Algorithms · Python", ("STRIPBOARD", f"{GH}/stripboard")),
     ("pair", "Multi-Domain RAG System", ("OMNIRAG", f"{GH}/OmniRAG")),
     ("pair", "Compiler, C to x86-64", ("JIVE COMPILER", f"{GH}/jive_compiler")),
     ("pair", "Pygame · TensorFlow", ("CYBER FISH TANK", f"{GH}/Cyber_Fish_Tank")),
 
     ("head", "FILMOGRAPHY"),
-    ("pair", "Director · Writer · Editor", ("HEIRLOOM", FILMS)),
-    ("pair", "Also", ("LET ME OUT", FILMS), ("SANATORIUM", FILMS), ("BULIMIA", FILMS)),
+    ("pair", "Director · Screenwriter · Co-producer · Editor", ("HEIRLOOM", FILMS)),
+    ("pair", "Director · Screenwriter · Editor · Colorist", ("LET ME OUT", FILMS)),
+    ("pair", "Photographer · Colorist", ("REFLECTIONS OF LIFE", FILMS)),
+    ("pair", "Editor", ("COMMERCIAL ADS", FILMS)),
+    ("pair", "Director · Screenwriter", ("SANATORIUM", FILMS)),
+    ("pair", "Photographer · Production Designer · Colorist", ("BULIMIA", FILMS)),
 
     ("head", "AWARDS & SELECTIONS"),
-    ("pair", "Best Editing", "CHICAGO FILMMAKER AWARDS"),
-    ("pair", "Best LGBTQ Short", "SF ARTHOUSE", "BERLIN SHORT FILM", "MADRID ARTHOUSE", "PHOENIX SHORTS"),
-    ("pair", "Official Selection", ("KYOTO INT’L STUDENT FILM FESTIVAL", "https://www.consortium.or.jp/en/project/kisfvf/details/2024-2")),
+    ("caps", "HEIRLOOM"),
+    # One line per award, like Technical Skills: a list becomes "A · B · C", each part linkable.
+    ("stack", "Official Selection", [
+        ("KYOTO", "https://www.consortium.or.jp/en/project/kisfvf/details/2024-2"),
+        ("SAN ANTONIO QFEST", f"{SITE}/films/san-antonio-qfest-2024.pdf"),
+        ("SF HOLE IN THE HEAD", "https://holehead2024.eventive.org/films/671997f6f12b3b004193fb7e")]),
+    ("stack", "Best Editing", ("CHICAGO FILMMAKER AWARDS", "https://cifawards.net/2024/10/23/winners-october-2024/")),
+    ("stack", "Best LGBTQ Short", [
+        ("SF ARTHOUSE", "https://sanfranciscoindieshort.com/winners-july-2024/"),
+        ("BERLIN", "https://berlinshortsaward.com/winners-july-2024/"),
+        ("MADRID", "https://maffestival.com/winners-october-2024/"),
+        ("PHOENIX", "https://phoenixshortfestival.com/winners-august-2024/")]),
+    ("stack", "Honorable Mention", "LOS ANGELES SHORT FILM AWARDS"),
+
+    ("head", "PRESS"),
+    ("caps", "HEIRLOOM"),
+    ("stack", "Featured in", ("UNIVERSALCINEMA MAGAZINE", "https://universalcinema.net/heirloom-navigating-family-identity-and-surrogacy-in-lgbtq-narratives/")),
+    ("stack", "Listed on Japan’s largest film review platform", ("FILMARKS", "https://filmarks.com/movies/121171")),
 
     ("head", "CHOREOGRAPHY"),
-    ("pair", "Original Works", ("ESCAPISM", DANCE), ("FXCKUPTHEWORLD", DANCE), ("LVBAG", DANCE)),
+    ("stack", "Music",
+        ("ESCAPISM", DANCE), ("FUXK UP THE WORLD", DANCE), ("THE WAY I ARE", DANCE),
+        ("WITH THE IE", DANCE), ("SPORTS CAR", DANCE), ("APT", DANCE),
+        ("PARTY 4 U", DANCE), ("TIT FOR TAT", DANCE), ("LV BAG", DANCE)),
 
+    # Lists read better centered, like a "special thanks" card, than hung off one short role.
     ("head", "TECHNICAL SKILLS"),
-    ("pair", "Languages", "JAVA · PYTHON · C · JAVASCRIPT"),
-    ("pair", "Backend", "SPRING BOOT · REST · SSE"),
-    ("pair", "AI / ML", "RAG · AGENT EVALUATION · LLM-AS-JUDGE"),
-    ("pair", "Video", "FFMPEG · OPENTIMELINEIO · DAVINCI RESOLVE"),
+    ("stack", "Languages", "JAVA · PYTHON · C · JAVASCRIPT"),
+    ("stack", "Backend", "SPRING BOOT · REST · SSE"),
+    ("stack", "AI / ML", "RAG · AGENT EVALUATION · LLM-AS-JUDGE"),
+    ("stack", "Video", "FFMPEG · OPENTIMELINEIO · DAVINCI RESOLVE"),
 
     ("gap", 120),
     ("small", "No frames were dropped in the making of this profile."),
@@ -102,6 +131,8 @@ def esc(s):
 
 
 def label(item):
+    if isinstance(item, list):
+        return " · ".join(label(x) for x in item)
     return item[0] if isinstance(item, tuple) else item
 
 
@@ -166,6 +197,13 @@ def svg_crawl():
         elif kind == "line":
             y += 30
             out.append(text(mid, y, a[0], 13, 400, opacity=.7, italic=True))
+        elif kind == "stack":
+            if a[0]:
+                y += 38
+                out.append(text(mid, y, a[0], 13, 400, opacity=.7))
+            for i, item in enumerate(a[1:]):
+                y += (24 if a[0] else 38) if i == 0 else 26
+                out.append(text(mid, y, item, 16, 500, spacing=1.5))
         elif kind == "small":
             y += 16
             out.append(text(mid, y, "  ·  ".join(label(x) for x in a), 13, 400, spacing=1, opacity=.6))
@@ -201,6 +239,8 @@ def reel(faces):
 
 # ── Cut 2: interactive page (HTML) ─────────────────────────────────────────
 def link(item, cls=""):
+    if isinstance(item, list):
+        return " · ".join(link(x) for x in item)
     c = f' class="{cls}"' if cls else ""
     if isinstance(item, tuple):
         text, url = item
@@ -223,6 +263,8 @@ def html_crawl():
             out.append(f"<h3>{link(a[0])}</h3>")
         elif kind == "line":
             out.append(f'<p class="line">{esc(a[0])}</p>')
+        elif kind == "stack":
+            out.append('<div class="stack">' + (f'<div class="role">{esc(a[0])}</div>' if a[0] else '') + '<div class="names">' + "".join(f"<div>{link(n)}</div>" for n in a[1:]) + '</div></div>')
         elif kind == "small":
             out.append('<p class="small">' + '<span class="dot">·</span>'.join(link(x) for x in a) + "</p>")
         elif kind == "pair":
@@ -249,13 +291,16 @@ html::-webkit-scrollbar{display:none}
 body{font-size:var(--u);text-align:center}
 main{padding:calc(50vh - 4em) 1.5em 100vh}
 a,span{color:inherit;text-decoration:none}
-a{position:relative;cursor:pointer}
-a::after{content:"";position:absolute;left:0;right:0;bottom:-.28em;height:1px;background:currentColor;
+a{position:relative;cursor:pointer;display:inline-block;line-height:1.15}
+/* Underline hugs the glyphs; right inset cancels the trailing letter-spacing. */
+a::after{content:"";position:absolute;left:0;right:var(--ls,0);bottom:-.14em;height:1px;background:currentColor;
   transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 a:hover::after,a:focus-visible::after{transform:scaleX(1)}
 a:focus-visible{outline:none}
 .by{font-size:1.06em;opacity:.75}
 h1{font-size:3.6em;font-weight:700;letter-spacing:.1em;margin:.35em 0 .15em;padding-left:.1em}
+h1 a{--ls:.1em}h1 a::after{height:2px;bottom:-.06em}
+.names a{--ls:.09em}h3 a{--ls:.02em}
 .caps{font-size:.8em;font-weight:500;letter-spacing:.23em;opacity:.75;margin-top:1em}
 h2{font-size:.88em;font-weight:700;letter-spacing:.36em;padding-left:.36em;margin:6em 0 1.1em}
 h3{font-size:.94em;font-weight:500;font-style:italic;letter-spacing:.02em;margin-top:.4em}
@@ -263,6 +308,7 @@ h3{font-size:.94em;font-weight:500;font-style:italic;letter-spacing:.02em;margin
 .small{font-size:.8em;letter-spacing:.06em;opacity:.6}
 .dot{margin:0 .8em}
 .pair{display:grid;grid-template-columns:1fr 1fr;column-gap:3.5em;margin-top:.85em;line-height:1.6}
+.stack{margin-top:1.3em;line-height:1.6}.stack .role{text-align:center}.stack .names{text-align:center}
 .role{text-align:right;font-size:.94em;opacity:.7}
 .names{text-align:left;font-weight:500;letter-spacing:.09em}
 @media (max-width:560px){.pair{column-gap:1.5em}h1{font-size:2.6em}}
