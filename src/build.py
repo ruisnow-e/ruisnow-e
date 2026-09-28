@@ -155,10 +155,10 @@ def svg_crawl():
             y += 18
         elif kind == "title":
             y += 34
-            out.append(text(mid, y, a[0], 24, 700, spacing=3))
+            out.append(text(mid, y, a[0], 17, 700, spacing=2))
         elif kind == "line":
             y += 30
-            out.append(text(mid, y, a[0], 16, 400, opacity=.75))
+            out.append(text(mid, y, a[0], 15, 400, opacity=.7))
         elif kind == "small":
             y += 16
             out.append(text(mid, y, "  ·  ".join(label(x) for x in a), 13, 400, spacing=1, opacity=.6))
@@ -251,8 +251,8 @@ a:focus-visible{outline:none}
 h1{font-size:3.6em;font-weight:700;letter-spacing:.1em;margin:.35em 0 .15em;padding-left:.1em}
 .caps{font-size:.8em;font-weight:500;letter-spacing:.23em;opacity:.75;margin-top:1em}
 h2{font-size:.88em;font-weight:700;letter-spacing:.36em;padding-left:.36em;margin:6em 0 1.1em}
-h3{font-size:1.5em;font-weight:700;letter-spacing:.12em;margin-top:.4em}
-.line{opacity:.75;margin-top:.7em}
+h3{font-size:1.06em;font-weight:700;letter-spacing:.12em;margin-top:.4em}
+.line{font-size:.94em;opacity:.7;margin-top:.6em}
 .small{font-size:.8em;letter-spacing:.06em;opacity:.6}
 .dot{margin:0 .8em}
 .pair{display:grid;grid-template-columns:1fr 1fr;column-gap:3.5em;margin-top:.85em;line-height:1.6}
