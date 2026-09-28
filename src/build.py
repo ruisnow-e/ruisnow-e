@@ -21,7 +21,13 @@ from fontTools.ttLib import TTFont
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FONTS = ROOT / "src" / "fonts"
-WEIGHTS = {400: "Inter-Regular.ttf", 500: "Inter-Medium.ttf", 700: "Inter-Bold.ttf"}
+FACES = {
+    (400, "normal"): "Inter-Regular.ttf",
+    (500, "normal"): "Inter-Medium.ttf",
+    (700, "normal"): "Inter-Bold.ttf",
+    (400, "italic"): "Inter-Italic.ttf",      # titles of works are set in italics
+    (500, "italic"): "Inter-MediumItalic.ttf",
+}
 
 W, H = 1000, 560
 GUTTER = 28     # half-width of the space between role and name columns (SVG)
@@ -48,7 +54,7 @@ CREDITS = [
     ("pair", "B.A. Communication", "CAPITAL UNIV. OF ECONOMICS & BUSINESS"),
 
     ("head", "RESEARCH"),
-    ("title", ("AGENTICVBENCH", ARXIV)),
+    ("title", ("AgenticVBench", ARXIV)),
     ("line", "Can AI Agents Complete Real-World Post-Production Tasks?"),
     ("gap", 14),
     ("pair", "Authors", "ZONGHENG CAO", "YI ZHENG", "RUI SONG", "XINYU HU"),
@@ -110,7 +116,7 @@ def font_faces(text):
     """Inter, subset to the glyphs actually used, as inline woff2 @font-face rules."""
     chars = set(text) | set(text.upper()) | set("0123456789")
     faces = []
-    for weight, name in WEIGHTS.items():
+    for (weight, style), name in FACES.items():
         font = TTFont(FONTS / name)
         opts = subset.Options()
         opts.flavor = "woff2"
@@ -122,7 +128,7 @@ def font_faces(text):
         font.flavor = "woff2"
         font.save(buf)
         data = base64.b64encode(buf.getvalue()).decode()
-        faces.append(f"@font-face{{font-family:'Inter';font-weight:{weight};font-display:block;"
+        faces.append(f"@font-face{{font-family:'Inter';font-weight:{weight};font-style:{style};font-display:block;"
                      f"src:url(data:font/woff2;base64,{data}) format('woff2')}}")
     return "".join(faces)
 
@@ -133,9 +139,9 @@ def svg_crawl():
     mid = W / 2
     y, out, card_mid = 0, [], 0
 
-    def text(x, y, s, size, weight, anchor="middle", spacing=0, opacity=1):
+    def text(x, y, s, size, weight, anchor="middle", spacing=0, opacity=1, italic=False):
         return (f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-size="{size}" font-weight="{weight}" '
-                f'letter-spacing="{spacing}" fill="#fff" fill-opacity="{opacity}">{esc(label(s))}</text>')
+                f'letter-spacing="{spacing}"{' font-style="italic"' if italic else ''} fill="#fff" fill-opacity="{opacity}">{esc(label(s))}</text>')
 
     for kind, *a in CREDITS:
         if kind == "gap":
@@ -155,10 +161,10 @@ def svg_crawl():
             y += 18
         elif kind == "title":
             y += 34
-            out.append(text(mid, y, a[0], 13, 700, spacing=2))
+            out.append(text(mid, y, a[0], 15, 500, spacing=.3, italic=True))
         elif kind == "line":
             y += 30
-            out.append(text(mid, y, a[0], 13, 400, opacity=.7))
+            out.append(text(mid, y, a[0], 13, 400, opacity=.7, italic=True))
         elif kind == "small":
             y += 16
             out.append(text(mid, y, "  ·  ".join(label(x) for x in a), 13, 400, spacing=1, opacity=.6))
@@ -251,8 +257,8 @@ a:focus-visible{outline:none}
 h1{font-size:3.6em;font-weight:700;letter-spacing:.1em;margin:.35em 0 .15em;padding-left:.1em}
 .caps{font-size:.8em;font-weight:500;letter-spacing:.23em;opacity:.75;margin-top:1em}
 h2{font-size:.88em;font-weight:700;letter-spacing:.36em;padding-left:.36em;margin:6em 0 1.1em}
-h3{font-size:.82em;font-weight:700;letter-spacing:.12em;margin-top:.4em}
-.line{font-size:.82em;opacity:.7;margin-top:.6em}
+h3{font-size:.94em;font-weight:500;font-style:italic;letter-spacing:.02em;margin-top:.4em}
+.line{font-size:.82em;font-style:italic;opacity:.7;margin-top:.6em}
 .small{font-size:.8em;letter-spacing:.06em;opacity:.6}
 .dot{margin:0 .8em}
 .pair{display:grid;grid-template-columns:1fr 1fr;column-gap:3.5em;margin-top:.85em;line-height:1.6}
