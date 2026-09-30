@@ -84,7 +84,6 @@ CREDITS = [
     ("pair", "Photographer · Colorist", ("REFLECTIONS OF LIFE", FILMS)),
     ("pair", "Editor", ("COMMERCIAL ADS", FILMS)),
     ("pair", "Director · Screenwriter", ("SANATORIUM", FILMS)),
-    ("pair", "Photographer · Production Designer · Colorist", ("BULIMIA", FILMS)),
 
     ("head", "AWARDS & SELECTIONS"),
     ("caps", "HEIRLOOM"),
@@ -93,7 +92,7 @@ CREDITS = [
         ("KYOTO", "https://www.consortium.or.jp/en/project/kisfvf/details/2024-2"),
         ("SAN ANTONIO QFEST", f"{SITE}/films/san-antonio-qfest-2024.pdf"),
         ("SF HOLE IN THE HEAD", "https://holehead2024.eventive.org/films/671997f6f12b3b004193fb7e")]),
-    ("stack", "Best Editing", ("CHICAGO FILMMAKER AWARDS", "https://cifawards.net/2024/10/23/winners-october-2024/")),
+    ("stack", "Best Editing", ("CHICAGO FILMMAKER AWARDS", "https://cifawards.net/winners-october-2024/")),
     ("stack", "Best LGBTQ Short", [
         ("SF ARTHOUSE", "https://sanfranciscoindieshort.com/winners-july-2024/"),
         ("BERLIN", "https://berlinshortsaward.com/winners-july-2024/"),
@@ -280,6 +279,7 @@ PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rui Song — End Credits</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta name="description" content="Rui Song — Engineer, Film Director, Choreographer. Résumé as a film end-credit crawl.">
 <style>
 __FACES__
